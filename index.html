@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santa CTC - Polo Norte</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(180deg, #001f3f 0%, #003d7a 50%, #ffffff 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Nieve cayendo */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 1em;
+            opacity: 0.8;
+            animation: fall linear infinite;
+            z-index: 1;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        
+        /* Trineo de Santa */
+        .sleigh-container {
+            position: fixed;
+            top: 50px;
+            right: -400px;
+            animation: sleighFly 15s ease-in-out infinite;
+            z-index: 100;
+        }
+        
+        @keyframes sleighFly {
+            0% {
+                right: -400px;
+                top: 50px;
+            }
+            25% {
+                right: 50%;
+                top: 30px;
+            }
+            50% {
+                right: 100%;
+                top: 50px;
+            }
+            100% {
+                right: -400px;
+                top: 50px;
+            }
+        }
+        
+        .sleigh {
+            font-size: 80px;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+        }
+        
+        /* Container principal */
+        .container {
+            max-width: 900px;
+            margin: 80px auto 40px;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Header con logo Santa */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            border: 4px solid #c41e3a;
+        }
+        
+        .santa-icon {
+            font-size: 100px;
+            margin-bottom: 15px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        h1 {
+            color: #c41e3a;
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            color: #2e7d32;
+            font-size: 1.3em;
+            font-style: italic;
+        }
+        
+        .north-pole-badge {
+            background: linear-gradient(135deg, #1565c0, #0d47a1);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.85em;
+            border: 2px solid white;
+            line-height: 1.5;
+        }
+        
+        /* Formulario */
+        .form-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+            border: 4px solid #2e7d32;
+        }
+        
+        .form-title {
+            text-align: center;
+            color: #c41e3a;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2e7d32;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            border: 3px solid #c41e3a;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: 'Georgia', serif;
+            transition: all 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #2e7d32;
+            box-shadow: 0 0 15px rgba(46, 125, 50, 0.3);
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #c41e3a, #8b1429);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(196, 30, 58, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(196, 30, 58, 0.6);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Carta de Santa */
+        .letter-section {
+            display: none;
+            background: #fffef0;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+            position: relative;
+            border: 8px solid #8b4513;
+            animation: slideIn 0.8s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .letter-header {
+            text-align: center;
+            border-bottom: 3px solid #c41e3a;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .north-pole-stamp {
+            background: #c41e3a;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50%;
+            display: inline-block;
+            transform: rotate(-15deg);
+            font-weight: bold;
+            margin-bottom: 15px;
+            border: 3px dashed white;
+        }
+        
+        .letter-date {
+            color: #666;
+            font-style: italic;
+            margin-top: 10px;
+        }
+        
+        .letter-content {
+            line-height: 2;
+            color: #333;
+            font-size: 1.1em;
+            text-align: justify;
+        }
+        
+        .letter-content p {
+            margin-bottom: 20px;
+        }
+        
+        .highlight {
+            color: #c41e3a;
+            font-weight: bold;
+        }
+        
+        .signature {
+            text-align: right;
+            margin-top: 40px;
+            font-size: 2em;
+            color: #c41e3a;
+            font-style: italic;
+        }
+        
+        .buttons-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .btn-download {
+            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+            color: white;
+        }
+        
+        .btn-new {
+            background: linear-gradient(135deg, #1565c0, #0d47a1);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Decoraciones */
+        .decoration {
+            position: fixed;
+            font-size: 40px;
+            opacity: 0.7;
+            z-index: 1;
+        }
+        
+        .tree-left {
+            bottom: 0;
+            left: 20px;
+            font-size: 120px;
+        }
+        
+        .tree-right {
+            bottom: 0;
+            right: 20px;
+            font-size: 120px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Nieve cayendo -->
+    <div id="snow"></div>
+    
+    <!-- Trineo de Santa -->
+    <div class="sleigh-container">
+        <div class="sleigh">🎅🦌🦌🛷</div>
+    </div>
+    
+    <!-- Decoraciones -->
+    <div class="decoration tree-left">🎄</div>
+    <div class="decoration tree-right">🎄</div>
+    
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="santa-icon">🎅</div>
+            <h1>Santa CTC</h1>
+            <p class="subtitle">Centros Tecnológicos Comunitarios</p>
+            <div class="north-pole-badge">📍 Directo desde el Polo Norte - Donde también llevamos tecnología e innovación ❄️💻</div>
+        </div>
+        
+        <!-- Formulario -->
+        <div class="form-section" id="formSection">
+            <h2 class="form-title">🎄 Escribe tu Deseo para este 2026 🎄</h2>
+            <form id="wishForm">
+                <div class="form-group">
+                    <label for="name">👤 Tu Nombre Completo:</label>
+                    <input type="text" id="name" required placeholder="Ejemplo: María Rodríguez">
+                </div>
+                
+                <div class="form-group">
+                    <label for="ctc">🏢 CTC donde Trabajas:</label>
+                    <input type="text" id="ctc" required placeholder="Ejemplo: CTC Santo Domingo Este">
+                </div>
+                
+                <div class="form-group">
+                    <label for="wish">⭐ Tu Deseo para este 2026:</label>
+                    <textarea id="wish" required placeholder="Cuéntale a Santa qué deseas lograr en este 2026... Puede ser personal, profesional, para tu comunidad, etc."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    ✨ Enviar a Santa en el Polo Norte ✨
+                </button>
+            </form>
+        </div>
+        
+        <!-- Carta de respuesta -->
+        <div class="letter-section" id="letterSection">
+            <div class="letter-header">
+                <div class="north-pole-stamp">POLO NORTE</div>
+                <h2 style="color: #c41e3a; font-size: 2.5em;">🎅 Carta de Santa Claus 🎄</h2>
+                <p class="letter-date" id="letterDate"></p>
+            </div>
+            
+            <div class="letter-content" id="letterContent">
+                <!-- Contenido generado dinámicamente -->
+            </div>
+            
+            <div class="signature">
+                Con cariño navideño,<br>
+                🎅 Santa Claus
+            </div>
+            
+            <div class="buttons-container">
+                <button class="btn btn-download" onclick="downloadLetter()">📥 Descargar Carta</button>
+                <button class="btn btn-new" onclick="newLetter()">✉️ Nueva Carta</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Crear nieve
+        function createSnow() {
+            const snowContainer = document.getElementById('snow');
+            for (let i = 0; i < 50; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                snowflake.innerHTML = '❄';
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                snowflake.style.animationDelay = Math.random() * 5 + 's';
+                snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                snowContainer.appendChild(snowflake);
+            }
+        }
+        
+        createSnow();
+        
+        // Manejar envío del formulario
+        document.getElementById('wishForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            generateLetter();
+        });
+        
+        function generateLetter() {
+            const name = document.getElementById('name').value.trim();
+            const ctc = document.getElementById('ctc').value.trim();
+            const wish = document.getElementById('wish').value.trim();
+            
+            // Obtener fecha actual
+            const now = new Date();
+            const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
+                          'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            const dateStr = `Polo Norte, ${now.getDate()} de ${months[now.getMonth()]} de ${now.getFullYear()}`;
+            
+            document.getElementById('letterDate').textContent = dateStr;
+            
+            // Generar contenido personalizado
+            const letterContent = `
+                <p>Querido/a <span class="highlight">${name}</span>,</p>
+                
+                <p>¡Ho, ho, ho! Saludos desde mi taller en el <span class="highlight">Polo Norte</span>, donde junto a mis duendes no solo preparamos regalos, sino que también llevamos <span class="highlight">tecnología e innovación</span> a cada rincón del mundo. Tu carta ha llegado a través de nuestros sistemas digitales más avanzados, y he leído con gran atención tu mensaje.</p>
+                
+                <p>Me llena de alegría saber que formas parte del equipo del <span class="highlight">${ctc}</span>, uno de los lugares más especiales que conozco en toda República Dominicana. Los <span class="highlight">Centros Tecnológicos Comunitarios</span> son verdaderos faros de esperanza y conocimiento, donde día a día se transforman vidas a través de la educación y la tecnología. ¡Qué noble labor la que realizas!</p>
+                
+                <p>Has compartido conmigo tu deseo para este 2026: <span class="highlight">"${wish}"</span></p>
+                
+                <p>Este deseo ha tocado mi corazón navideño profundamente. Desde aquí, en mi taller equipado con la última tecnología (sí, hasta en el Polo Norte innovamos), quiero decirte que la magia más poderosa no viene de mi saco de regalos, sino del <span class="highlight">corazón y la determinación</span> de personas como tú que trabajan cada día por un mundo mejor.</p>
+                
+                <p>Para este 2026, te envío mi bendición navideña más especial. Que cada día en el <span class="highlight">${ctc}</span> esté lleno de nuevas oportunidades, que tu trabajo siga impactando positivamente a tu comunidad, y que tu deseo se vaya cumpliendo paso a paso, con la misma constancia con la que mis renos vuelan cada Nochebuena.</p>
+                
+                <p>Recuerda que el espíritu navideño no vive solo en diciembre, sino en cada acto de bondad, en cada mano extendida, y en cada sueño que te atreves a perseguir. Tú, <span class="highlight">${name}</span>, eres parte de ese espíritu que hace al mundo un lugar mejor.</p>
+                
+                <p>Sigue brillando en tu labor en los CTC, sigue creyendo en la magia del conocimiento compartido, y mantén siempre viva la llama de la esperanza en tu corazón.</p>
+                
+                <p style="text-align: center; font-size: 1.3em; color: #c41e3a; margin-top: 30px;">
+                    ✨ ¡Felices Fiestas y un Próspero 2026! ✨
+                </p>
+            `;
+            
+            document.getElementById('letterContent').innerHTML = letterContent;
+            
+            // Ocultar formulario y mostrar carta
+            document.getElementById('formSection').style.display = 'none';
+            document.getElementById('letterSection').style.display = 'block';
+            
+            // Scroll suave hacia la carta
+            document.getElementById('letterSection').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function downloadLetter() {
+            window.print();
+        }
+        
+        function newLetter() {
+            document.getElementById('formSection').style.display = 'block';
+            document.getElementById('letterSection').style.display = 'none';
+            document.getElementById('wishForm').reset();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Estilos de impresión
+        const style = document.createElement('style');
+        style.textContent = `
+            @media print {
+                body * {
+                    visibility: hidden;
+                }
+                .letter-section, .letter-section * {
+                    visibility: visible;
+                }
+                .letter-section {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                }
+                .buttons-container {
+                    display: none !important;
+                }
+                .snowflake, .sleigh-container, .decoration {
+                    display: none !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
