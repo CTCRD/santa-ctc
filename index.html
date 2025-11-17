@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Santa CTC - Polo Norte</title>
+    <title>Feliz Navidad CTC</title>
     <style>
         * {
             margin: 0;
@@ -11,23 +11,32 @@
             box-sizing: border-box;
         }
         
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+        
         body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(180deg, #001f3f 0%, #003d7a 50%, #ffffff 100%);
-            min-height: 100vh;
+            background: linear-gradient(135deg, #1a5f3a 0%, #2d8659 50%, #1a5f3a 100%);
+            font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
-            position: relative;
+            min-height: 100vh;
+            padding-bottom: 50px;
         }
         
-        /* Nieve cayendo */
-        .snowflake {
+        .snowflakes {
             position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .snowflake {
+            position: absolute;
             top: -10px;
             color: white;
             font-size: 1em;
-            opacity: 0.8;
             animation: fall linear infinite;
-            z-index: 1;
         }
         
         @keyframes fall {
@@ -36,472 +45,460 @@
             }
         }
         
-        /* Trineo de Santa */
-        .sleigh-container {
-            position: fixed;
-            top: 50px;
-            right: -400px;
-            animation: sleighFly 15s ease-in-out infinite;
-            z-index: 100;
-        }
-        
-        @keyframes sleighFly {
-            0% {
-                right: -400px;
-                top: 50px;
-            }
-            25% {
-                right: 50%;
-                top: 30px;
-            }
-            50% {
-                right: 100%;
-                top: 50px;
-            }
-            100% {
-                right: -400px;
-                top: 50px;
-            }
-        }
-        
-        .sleigh {
-            font-size: 80px;
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
-        }
-        
-        /* Container principal */
-        .container {
-            max-width: 900px;
-            margin: 80px auto 40px;
-            padding: 20px;
+        .header {
+            text-align: center;
+            padding: 30px 20px;
             position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header h1 {
+            color: #FFD700;
+            font-size: 2.5em;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5), 0 0 20px rgba(255,215,0,0.6);
+            margin-bottom: 20px;
+            animation: glow 2s ease-in-out infinite;
+            line-height: 1.3;
+        }
+        
+        @keyframes glow {
+            0%, 100% { text-shadow: 3px 3px 6px rgba(0,0,0,0.5), 0 0 20px rgba(255,215,0,0.6); }
+            50% { text-shadow: 3px 3px 6px rgba(0,0,0,0.5), 0 0 40px rgba(255,215,0,0.9); }
+        }
+        
+        .header p {
+            color: #FFD700;
+            font-size: 1.1em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .header .subtitle {
+            color: #FFD700;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .santa {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 80px;
+            cursor: pointer;
+            z-index: 1000;
+            animation: wave 2s ease-in-out infinite;
+            filter: drop-shadow(3px 3px 6px rgba(0,0,0,0.3));
+        }
+        
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+        }
+        
+        .santa:hover {
+            transform: scale(1.1);
+        }
+        
+        .message-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            z-index: 2000;
+            animation: popIn 0.3s ease-out;
+        }
+        
+        @keyframes popIn {
+            from {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .message-popup h2 {
+            color: #1a5f3a;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .message-popup p {
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+        
+        .close-btn {
+            background: #c41e3a;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+        
+        .close-btn:hover {
+            background: #a01829;
+        }
+        
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1500;
+        }
+        
+        .lights-container {
+            position: relative;
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 20px;
             z-index: 10;
         }
         
-        /* Header con logo Santa */
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            border: 4px solid #c41e3a;
-        }
-        
-        .santa-icon {
-            font-size: 100px;
-            margin-bottom: 15px;
-            animation: bounce 2s ease-in-out infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-        
-        h1 {
-            color: #c41e3a;
-            font-size: 3em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        
-        .subtitle {
-            color: #2e7d32;
-            font-size: 1.3em;
-            font-style: italic;
-        }
-        
-        .north-pole-badge {
-            background: linear-gradient(135deg, #1565c0, #0d47a1);
-            color: white;
-            padding: 10px 25px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-top: 10px;
-            font-size: 0.85em;
-            border: 2px solid white;
-            line-height: 1.5;
-        }
-        
-        /* Formulario */
-        .form-section {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            margin-bottom: 30px;
-            border: 4px solid #2e7d32;
-        }
-        
-        .form-title {
-            text-align: center;
-            color: #c41e3a;
+        .zone-title {
+            color: #ffe6e6;
             font-size: 2em;
-            margin-bottom: 30px;
-        }
-        
-        .form-group {
-            margin-bottom: 25px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #2e7d32;
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-        
-        input, textarea {
-            width: 100%;
-            padding: 15px;
-            border: 3px solid #c41e3a;
-            border-radius: 10px;
-            font-size: 1em;
-            font-family: 'Georgia', serif;
-            transition: all 0.3s;
-        }
-        
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #2e7d32;
-            box-shadow: 0 0 15px rgba(46, 125, 50, 0.3);
-        }
-        
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
-        .submit-btn {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #c41e3a, #8b1429);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.3em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 5px 20px rgba(196, 30, 58, 0.4);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(196, 30, 58, 0.6);
-        }
-        
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-        
-        /* Carta de Santa */
-        .letter-section {
-            display: none;
-            background: #fffef0;
-            padding: 50px;
-            border-radius: 15px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
-            position: relative;
-            border: 8px solid #8b4513;
-            animation: slideIn 0.8s ease-out;
-        }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .letter-header {
             text-align: center;
-            border-bottom: 3px solid #c41e3a;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .north-pole-stamp {
-            background: #c41e3a;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 50%;
-            display: inline-block;
-            transform: rotate(-15deg);
-            font-weight: bold;
-            margin-bottom: 15px;
-            border: 3px dashed white;
-        }
-        
-        .letter-date {
-            color: #666;
-            font-style: italic;
-            margin-top: 10px;
-        }
-        
-        .letter-content {
-            line-height: 2;
-            color: #333;
-            font-size: 1.1em;
-            text-align: justify;
-        }
-        
-        .letter-content p {
-            margin-bottom: 20px;
-        }
-        
-        .highlight {
-            color: #c41e3a;
+            margin: 40px 0 30px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
             font-weight: bold;
         }
         
-        .signature {
-            text-align: right;
-            margin-top: 40px;
-            font-size: 2em;
-            color: #c41e3a;
-            font-style: italic;
-        }
-        
-        .buttons-container {
+        .lights-row {
             display: flex;
-            gap: 15px;
-            margin-top: 30px;
             justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+            padding: 20px;
         }
         
-        .btn {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1em;
+        .ornament {
+            position: relative;
+            width: 110px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .ornament:hover {
+            transform: scale(1.15) translateY(-5px);
+        }
+        
+        .ornament-top {
+            width: 20px;
+            height: 25px;
+            background: linear-gradient(135deg, #d4af37 0%, #c4a028 100%);
+            border-radius: 3px 3px 0 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            margin-bottom: 5px;
+        }
+        
+        .ornament-ball {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #c41e3a 0%, #8b1528 100%);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3), inset -5px -5px 10px rgba(0,0,0,0.2), inset 5px 5px 10px rgba(255,255,255,0.3);
+            position: relative;
+            animation: blink 2s ease-in-out infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .ornament:nth-child(even) .ornament-ball {
+            background: linear-gradient(135deg, #0052a3 0%, #003875 100%);
+            animation-delay: 1s;
+        }
+        
+        @keyframes blink {
+            0%, 100% { 
+                opacity: 1; 
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3), 
+                           inset -5px -5px 10px rgba(0,0,0,0.2), 
+                           inset 5px 5px 10px rgba(255,255,255,0.3),
+                           0 0 20px rgba(255,255,255,0.4);
+            }
+            50% { 
+                opacity: 0.7; 
+                box-shadow: 0 5px 25px rgba(255,255,255,0.6), 
+                           inset -5px -5px 10px rgba(0,0,0,0.2), 
+                           inset 5px 5px 10px rgba(255,255,255,0.5),
+                           0 0 40px rgba(255,255,255,0.8);
+            }
+        }
+        
+        .ornament-icons {
+            display: flex;
+            gap: 5px;
+            font-size: 20px;
+        }
+        
+        .ornament-name {
+            text-align: center;
+            color: white;
+            font-size: 0.85em;
+            margin-top: 8px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
             font-weight: bold;
-        }
-        
-        .btn-download {
-            background: linear-gradient(135deg, #2e7d32, #1b5e20);
-            color: white;
-        }
-        
-        .btn-new {
-            background: linear-gradient(135deg, #1565c0, #0d47a1);
-            color: white;
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        /* Decoraciones */
-        .decoration {
-            position: fixed;
-            font-size: 40px;
-            opacity: 0.7;
-            z-index: 1;
-        }
-        
-        .tree-left {
-            bottom: 0;
-            left: 20px;
-            font-size: 120px;
-        }
-        
-        .tree-right {
-            bottom: 0;
-            right: 20px;
-            font-size: 120px;
+            max-width: 110px;
         }
     </style>
 </head>
 <body>
-    <!-- Nieve cayendo -->
-    <div id="snow"></div>
+    <div class="snowflakes" id="snowflakes"></div>
     
-    <!-- Trineo de Santa -->
-    <div class="sleigh-container">
-        <div class="sleigh">🎅🦌🦌🛷</div>
+    <div class="header">
+        <h1>🎄 CTC, una red que acorta distancias y une corazones en Navidad 🎄</h1>
+        <p>Bienvenidos a este espacio donde los CTC celebran la unión, la esperanza y la transformación. Desde la Sede Central en Santo Domingo enviamos un mensaje de luz y gratitud a cada uno de nuestros centros en todo el país.</p>
+        <p>Aquí encontrarás palabras que inspiran, que fortalecen y que nos recuerdan que somos una sola red, comprometida con el aprendizaje, la tecnología y el desarrollo de nuestras comunidades.</p>
+        <p>Gracias por caminar con nosotros hacia un 2026 lleno de oportunidades y crecimiento colectivo. Somos CTC. Somos comunidad. Somos esperanza en acción.</p>
     </div>
     
-    <!-- Decoraciones -->
-    <div class="decoration tree-left">🎄</div>
-    <div class="decoration tree-right">🎄</div>
+    <div class="santa" onclick="santaGreeting()">🎅</div>
     
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="santa-icon">🎅</div>
-            <h1>Santa CTC</h1>
-            <p class="subtitle">Centros Tecnológicos Comunitarios</p>
-            <div class="north-pole-badge">📍 Directo desde el Polo Norte - Donde también llevamos tecnología e innovación ❄️💻</div>
-        </div>
+    <div class="overlay" id="overlay" onclick="closeMessage()"></div>
+    <div class="message-popup" id="messagePopup"></div>
+    
+    <div class="lights-container">
+        <!-- ZONA SUR -->
+        <div class="zone-title">⭐ ZONA SUR ⭐</div>
+        <div class="lights-row" id="zonaSur"></div>
         
-        <!-- Formulario -->
-        <div class="form-section" id="formSection">
-            <h2 class="form-title">🎄 Escribe tu Deseo para este 2026 🎄</h2>
-            <form id="wishForm">
-                <div class="form-group">
-                    <label for="name">👤 Tu Nombre Completo:</label>
-                    <input type="text" id="name" required placeholder="Ejemplo: María Rodríguez">
-                </div>
-                
-                <div class="form-group">
-                    <label for="ctc">🏢 CTC donde Trabajas:</label>
-                    <input type="text" id="ctc" required placeholder="Ejemplo: CTC Santo Domingo Este">
-                </div>
-                
-                <div class="form-group">
-                    <label for="wish">⭐ Tu Deseo para este 2026:</label>
-                    <textarea id="wish" required placeholder="Cuéntale a Santa qué deseas lograr en este 2026... Puede ser personal, profesional, para tu comunidad, etc."></textarea>
-                </div>
-                
-                <button type="submit" class="submit-btn">
-                    ✨ Enviar a Santa en el Polo Norte ✨
-                </button>
-            </form>
-        </div>
+        <!-- ZONA NORTE -->
+        <div class="zone-title">⭐ ZONA NORTE ⭐</div>
+        <div class="lights-row" id="zonaNorte"></div>
         
-        <!-- Carta de respuesta -->
-        <div class="letter-section" id="letterSection">
-            <div class="letter-header">
-                <div class="north-pole-stamp">POLO NORTE</div>
-                <h2 style="color: #c41e3a; font-size: 2.5em;">🎅 Carta de Santa Claus 🎄</h2>
-                <p class="letter-date" id="letterDate"></p>
-            </div>
-            
-            <div class="letter-content" id="letterContent">
-                <!-- Contenido generado dinámicamente -->
-            </div>
-            
-            <div class="signature">
-                Con cariño navideño,<br>
-                🎅 Santa Claus
-            </div>
-            
-            <div class="buttons-container">
-                <button class="btn btn-download" onclick="downloadLetter()">📥 Descargar Carta</button>
-                <button class="btn btn-new" onclick="newLetter()">✉️ Nueva Carta</button>
-            </div>
-        </div>
+        <!-- METROPOLITANA -->
+        <div class="zone-title">⭐ ZONA METROPOLITANA ⭐</div>
+        <div class="lights-row" id="zonaMetropolitana"></div>
+        
+        <!-- ZONA ESTE -->
+        <div class="zone-title">⭐ ZONA ESTE ⭐</div>
+        <div class="lights-row" id="zonaEste"></div>
+        
+        <!-- COMPUMETROS -->
+        <div class="zone-title">⭐ COMPUMETROS ⭐</div>
+        <div class="lights-row" id="compumetros"></div>
     </div>
-
+    
+    <audio id="bgMusic" loop>
+        <source src="https://cdn.pixabay.com/audio/2022/11/28/audio_e2b6f3cc44.mp3" type="audio/mpeg">
+    </audio>
+    
     <script>
-        // Crear nieve
-        function createSnow() {
-            const snowContainer = document.getElementById('snow');
-            for (let i = 0; i < 50; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.classList.add('snowflake');
-                snowflake.innerHTML = '❄';
-                snowflake.style.left = Math.random() * 100 + '%';
-                snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                snowflake.style.animationDelay = Math.random() * 5 + 's';
-                snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
-                snowContainer.appendChild(snowflake);
-            }
-        }
+        const centers = {
+            zonaSur: [
+                {name: "Arroyo Cano", message: "Desde la Sede Central enviamos un abrazo lleno de luz al CTC Arroyo Cano. Su entrega, su constancia y su espíritu solidario han sembrado esperanza en cada rincón de su comunidad. Que esta Navidad renueve sus fuerzas y les inspire a seguir abriendo caminos de aprendizaje y desarrollo. Juntos avanzamos hacia un 2026 lleno de oportunidades, logros y crecimiento colectivo. Con aprecio profundo, Sede Central CTC"},
+                {name: "Bohechío", message: "Desde Santo Domingo abrazamos con gratitud al CTC Bohechío. Su valentía, su sentido humano y su compromiso con la educación son un ejemplo para toda nuestra red nacional. Que esta Navidad traiga paz y nueva energía para seguir transformando vidas. Unidos caminamos hacia un 2026 de impacto, formación y esperanza renovada. Con aprecio profundo, Sede Central CTC"},
+                {name: "Favidrio", message: "Desde la Sede Central extendemos un saludo lleno de reconocimiento al CTC Favidrio. Su trabajo cercano, diario y honesto demuestra que la verdadera transformación nace de la dedicación y el servicio. Que esta Navidad ilumine su camino y fortalezca su fe. Sigamos unidos hacia un 2026 de avances, proyectos fortalecidos y bienestar comunitario. Con aprecio profundo, Sede Central CTC"},
+                {name: "Guayabal (Azua)", message: "Desde Santo Domingo enviamos un abrazo especial al CTC Guayabal Azua. Su compromiso con la formación y el crecimiento de su comunidad nos llena de orgullo y esperanza. Que esta Navidad renueve su espíritu y multiplique la fuerza que necesitan para continuar guiando vidas. Vamos hacia un 2026 de crecimiento, metas cumplidas y nuevos horizontes. Con aprecio profundo, Sede Central CTC"},
+                {name: "La Pared de Haina", message: "Desde la Sede Central enviamos un saludo lleno de estima al CTC La Pared de Haina. Su labor constante ha sido faro de oportunidades para quienes buscan aprender y superarse. Que esta Navidad traiga serenidad, fe y esperanza viva. Unidos avanzamos hacia un 2026 de desarrollo comunitario, educación y transformación profunda. Con aprecio profundo, Sede Central CTC"},
+                {name: "Las Yayas", message: "Desde Santo Domingo extendemos un abrazo lleno de luz al CTC Las Yayas. Su compromiso y su servicio digno representan la esencia de lo que somos como institución. Que esta Navidad renueve sus fuerzas y avive la esperanza que los impulsa. Caminemos unidos hacia un 2026 lleno de logros, crecimiento y bienestar. Con aprecio profundo, Sede Central CTC"},
+                {name: "Nigua", message: "Desde la Sede Central enviamos un mensaje especial al CTC Nigua. Gracias por sostener con firmeza los valores que guían nuestra misión: solidaridad, educación y transformación. Que esta Navidad les colme de paz y energía renovada. Sigamos trabajando como una sola familia CTC hacia un 2026 de oportunidades, desarrollo y metas alcanzadas. Con aprecio profundo, Sede Central CTC"},
+                {name: "Padre Las Casas", message: "Desde Santo Domingo enviamos un abrazo lleno de cariño al CTC Padre Las Casas. Su dedicación y entrega diaria son una demostración viva de compromiso comunitario. Que esta Navidad fortalezca su fe y renueve su alegría para seguir guiando con excelencia. Caminemos juntos hacia un 2026 de crecimiento, logros y esperanza para su comunidad. Con aprecio profundo, Sede Central CTC"},
+                {name: "Peralta", message: "Desde la Sede Central enviamos un saludo lleno de gratitud al CTC Peralta. Su labor constante ha sembrado oportunidades y ha fortalecido el desarrollo local. Que esta Navidad sea un tiempo de luz, calma y nueva inspiración. Unidos avanzamos hacia un 2026 de impacto social, formación y crecimiento humano. Con aprecio profundo, Sede Central CTC"},
+                {name: "Pueblo Viejo", message: "Desde Santo Domingo abrazamos con aprecio al CTC Pueblo Viejo. Su espíritu de servicio, cercano y noble, ha creado un espacio que transforma vidas cada día. Que esta Navidad renueve su entusiasmo y su esperanza. Sigamos caminando unidos hacia un 2026 de grandes metas alcanzadas y bienestar para su comunidad. Con aprecio profundo, Sede Central CTC"},
+                {name: "Quita Sueño", message: "Desde la Sede Central enviamos un abrazo lleno de estima al CTC Quita Sueño. Su dedicación constante es un ejemplo de esfuerzo, pasión y compromiso con el desarrollo comunitario. Que esta Navidad les traiga nueva energía y esperanza viva. Unidos avanzamos hacia un 2026 lleno de oportunidades educativas y logros compartidos. Con aprecio profundo, Sede Central CTC"},
+                {name: "Sabana Yegua", message: "Desde Santo Domingo enviamos un mensaje lleno de luz al CTC Sabana Yegua. Su constancia y entrega reflejan el espíritu que mueve a los CTC: transformar vidas con educación, empatía y tecnología. Que esta Navidad renueve sus fuerzas y fortalezca su confianza en el futuro. Avancemos juntos hacia un 2026 de crecimiento, proyectos fortalecidos y esperanza colectiva. Con aprecio profundo, Sede Central CTC"},
+                {name: "Sombrero", message: "Desde la Sede Central extendemos un saludo lleno de aprecio al CTC Sombrero. Gracias por el compromiso con el aprendizaje, por acercar la tecnología y por servir con vocación y humanidad. Que esta Navidad colme sus corazones de paz y optimismo. Unidos caminamos hacia un 2026 de nuevos logros y mayor impacto en su comunidad. Con aprecio profundo, Sede Central CTC"},
+                {name: "Vallejuelo", message: "Desde Santo Domingo enviamos un abrazo lleno de gratitud al CTC Vallejuelo. Ustedes representan el espíritu de superación y la fe que impulsa a nuestras comunidades a encontrar nuevos caminos. Que esta Navidad fortalezca su esperanza y renueve su ánimo para seguir sirviendo con excelencia. Vamos juntos hacia un 2026 de crecimiento, educación y oportunidades. Con aprecio profundo, Sede Central CTC"},
+                {name: "Villarpando", message: "Desde la Sede Central enviamos un mensaje lleno de cariño al CTC Villarpando. Su dedicación diaria, su compromiso con la comunidad y su vocación de servicio engrandecen nuestra red nacional. Que esta Navidad llene sus vidas de luz, paz y esperanza. Unidos caminamos hacia un 2026 de logros, desarrollo y transformación comunitaria. Con aprecio profundo, Sede Central CTC"},
+                {name: "Bánica", message: "Desde la Sede Central enviamos un abrazo lleno de luz al CTC Bánica. Su labor en una comunidad histórica y llena de valores demuestra que cuando se sirve con vocación, la transformación se vuelve imparable. Que esta Navidad renueve su fe, avive su esperanza y fortalezca su espíritu. Sigamos unidos hacia un 2026 de crecimiento, formación y nuevas oportunidades. Con aprecio profundo, Sede Central CTC"},
+                {name: "Carrera de Yeguas", message: "Desde Santo Domingo enviamos un mensaje lleno de reconocimiento al CTC Carrera de Yeguas. Su compromiso con la educación digital y la formación humana ha impactado significativamente la vida de muchas familias. Que esta Navidad les regale serenidad, fuerza y optimismo renovado. Avancemos juntos hacia un 2026 de logros, desarrollo comunitario y esperanza viva. Con aprecio profundo, Sede Central CTC"},
+                {name: "Comendador", message: "Desde la Sede Central enviamos un abrazo especial al CTC Comendador. Su trabajo en la frontera es un acto de servicio profundo que honra la misión de nuestra institución. Que esta Navidad ilumine sus vidas y renueve su fe. Caminemos unidos hacia un 2026 de impacto social, aprendizaje y crecimiento institucional. Con aprecio profundo, Sede Central CTC"},
+                {name: "El Cercado", message: "Desde Santo Domingo extendemos un saludo lleno de gratitud al CTC El Cercado. Su esfuerzo constante, lleno de humanidad y compromiso, ha fortalecido la esperanza de su comunidad. Que esta Navidad renueve su espíritu y avive el entusiasmo que los impulsa. Unidos avanzamos hacia un 2026 de grandes proyectos y logros compartidos. Con aprecio profundo, Sede Central CTC"},
+                {name: "El Llano", message: "Desde la Sede Central enviamos un abrazo cargado de estima al CTC El Llano. Ustedes han demostrado que la dedicación, el cariño y la disciplina pueden abrir caminos antes impensables para muchas personas. Que esta Navidad les traiga paz, luz y esperanza profunda. Sigamos trabajando unidos hacia un 2026 de crecimiento y oportunidades. Con aprecio profundo, Sede Central CTC"}
+            ],
+            zonaNorte: [
+                {name: "Castañuelas", message: "Desde la Sede Central del CTC en Santo Domingo enviamos un abrazo lleno de luz al CTC Castañuelas. Su labor constante, cercana y humana es un testimonio de amor por la comunidad y compromiso con la transformación social. En esta Navidad, que la fe fortalezca su espíritu y que la esperanza ilumine cada uno de sus proyectos. Sigamos unidos como una sola red nacional, trabajando con corazón hacia un 2026 lleno de avances, oportunidades y victorias comunitarias. Con aprecio profundo, Sede Central CTC"},
+                {name: "Copey", message: "Desde la Sede Central enviamos un mensaje lleno de gratitud al CTC Copey. Su dedicación diaria demuestra que cuando una comunidad se abraza al conocimiento, la tecnología y los valores, todo se transforma para bien. Que esta Navidad renueve su alegría y multiplique la fuerza para seguir acompañando a quienes buscan aprender, crecer y salir adelante. Unidos avanzamos hacia un 2026 de logros, crecimiento y nuevas metas alcanzadas. Con aprecio profundo, Sede Central CTC"},
+                {name: "Esperanza", message: "Desde Santo Domingo enviamos un saludo especial al CTC Esperanza, cuyo nombre refleja lo que ustedes ofrecen cada día a su comunidad: confianza, fe y oportunidades reales para transformar el futuro. Que esta Navidad fortalezca ese espíritu noble y valiente que los caracteriza. Sigamos caminando juntos hacia un 2026 de crecimiento humano, innovación y servicio de calidad. Con aprecio profundo, Sede Central CTC"},
+                {name: "La Caya", message: "Desde la Sede Central abrazamos con estima al CTC La Caya, un centro que ha sabido sembrar disciplina, conocimiento y esperanza en cada rincón de su comunidad. Que esta Navidad llene sus corazones de paz y entusiasmo renovado para continuar con la misión que compartimos. Unidos y firmes, avancemos hacia un 2026 lleno de frutos y grandes transformaciones. Con aprecio profundo, Sede Central CTC"},
+                {name: "La Piña", message: "Desde Santo Domingo enviamos un abrazo lleno de gratitud al CTC La Piña. Gracias por su entrega cotidiana y por su compromiso con el desarrollo humano de su comunidad. En esta Navidad, que la fe les inspire, que la esperanza les sostenga y que la alegría sea abundante. Unidos seguimos construyendo un 2026 de oportunidades reales y logros compartidos. Con aprecio profundo, Sede Central CTC"},
+                {name: "Los Almácigos", message: "Desde la Sede Central enviamos un cálido saludo al CTC Los Almácigos, un centro que ha demostrado que el compromiso y la vocación pueden mover montañas y abrir puertas al progreso. Que esta Navidad renueve su fuerza interior y su espíritu de servicio. Sigamos trabajando juntos hacia un 2026 que traiga más desarrollo, aprendizaje y bienestar. Con aprecio profundo, Sede Central CTC"},
+                {name: "Manuel Bueno", message: "Desde Santo Domingo saludamos con admiración al CTC Manuel Bueno, cuya labor es un ejemplo de constancia, dedicación y profundo amor por la comunidad. Que esta Navidad sea un tiempo de paz y renovación. Que el 2026 llegue cargado de frutos, nuevos logros y oportunidades para seguir impactando vidas. Con aprecio profundo, Sede Central CTC"},
+                {name: "Monción", message: "Desde la Sede Central enviamos un abrazo lleno de cariño al CTC Monción, un equipo que ha sabido trabajar con entrega y responsabilidad para fortalecer la educación y la tecnología en su comunidad. Que esta Navidad les regale serenidad y esperanza, y que el 2026 sea un año de crecimiento, innovación y grandes proyectos. Con aprecio profundo, Sede Central CTC"},
+                {name: "Partido", message: "Desde Santo Domingo abrazamos con gratitud al CTC Partido, un centro que día tras día demuestra que el trabajo honesto y comprometido puede cambiar la vida de muchas personas. Que esta Navidad renueve su espíritu y fortalezca la esperanza que los impulsa. Unidos caminamos hacia un 2026 de nuevos comienzos y logros significativos. Con aprecio profundo, Sede Central CTC"},
+                {name: "Pepillo Salcedo", message: "Desde la Sede Central enviamos un saludo lleno de luz al CTC Pepillo Salcedo. Su labor en la frontera es un acto de servicio profundo, valiente y transformador. Que esta Navidad llene sus corazones de paz y fuerza renovada para seguir guiando a quienes buscan una oportunidad. Vamos hacia un 2026 de crecimiento, dignidad y desarrollo humano. Con aprecio profundo, Sede Central CTC"},
+                {name: "Restauración", message: "Desde la Sede Central del CTC enviamos un abrazo sincero al CTC Restauración. Ustedes llevan esperanza a una zona histórica, llena de valores y desafíos, con un compromiso admirable. Que esta Navidad renueve sus fuerzas y que 2026 sea un año lleno de oportunidades, conocimiento e inspiración. Con aprecio profundo, Sede Central CTC"},
+                {name: "Río Limpio", message: "Desde Santo Domingo extendemos un abrazo lleno de estima al CTC Río Limpio. Su labor en una comunidad tan especial demuestra que la transformación nace desde la fe, el trabajo y la solidaridad. Que esta Navidad traiga paz, claridad y energía para continuar avanzando. Sigamos unidos hacia un 2026 de nuevas metas cumplidas y un impacto cada vez mayor. Con aprecio profundo, Sede Central CTC"},
+                {name: "Castillo", message: "Desde la Sede Central del CTC enviamos un abrazo lleno de gratitud al CTC Castillo, cuyo compromiso ha sido clave para llevar educación, tecnología y esperanza a su comunidad. Que esta Navidad renueve su espíritu y fortalezca su fe en la misión que compartimos. Sigamos caminando juntos hacia un 2026 de crecimiento, nuevas oportunidades y logros que enaltezcan a nuestra gente. Con aprecio profundo, Sede Central CTC"},
+                {name: "Cayetano Germosén", message: "Desde Santo Domingo enviamos un saludo especial al CTC Cayetano Germosén. Cada esfuerzo que realizan, cada persona que orientan y cada espacio que abren al aprendizaje demuestra su enorme vocación de servicio. Que esta Navidad llene sus corazones de paz y esperanza, y que el 2026 sea un año de avances significativos y bendiciones compartidas. Con aprecio profundo, Sede Central CTC"},
+                {name: "El Factor", message: "Desde la Sede Central abrazamos con estima al CTC El Factor. Su dedicación y espíritu comunitario son un ejemplo inspirador de lo que significa servir con amor y responsabilidad. Que esta Navidad traiga renovación espiritual y nuevos ánimos para seguir impulsando a quienes buscan transformar sus vidas. Avancemos unidos hacia un 2026 lleno de logros y desarrollo comunitario. Con aprecio profundo, Sede Central CTC"},
+                {name: "El Limón", message: "Desde Santo Domingo enviamos un abrazo especial al CTC El Limón. Su compromiso con la educación, la inclusión digital y el acompañamiento comunitario engrandece la misión que nos une. Que esta Navidad les regale serenidad, fuerza y esperanza para continuar guiando con excelencia. Vamos hacia un 2026 lleno de proyectos, formación y crecimiento humano. Con aprecio profundo, Sede Central CTC"},
+                {name: "Gaspar Hernández", message: "Desde la Sede Central extendemos un mensaje de gratitud al CTC Gaspar Hernández. Su trabajo cercano, humano y constante ha marcado una diferencia real en la vida de quienes les rodean. Que esta Navidad renueve su fe y multiplique su energía para seguir avanzando. Unidos como una sola red nacional, caminamos hacia un 2026 de grandes oportunidades y nuevas metas cumplidas. Con aprecio profundo, Sede Central CTC"},
+                {name: "Jamao al Norte", message: "Desde Santo Domingo enviamos un saludo lleno de luz al CTC Jamao al Norte. Su entrega diaria refleja un profundo amor por su comunidad y una vocación formidable para servir con humildad y excelencia. Que esta Navidad avive la esperanza y fortalezca el compromiso que los impulsa. Sigamos avanzando hacia un 2026 de logros, formación y crecimiento sostenible. Con aprecio profundo, Sede Central CTC"},
+                {name: "Juan López", message: "Desde la Sede Central enviamos un abrazo lleno de aprecio al CTC Juan López. Ustedes han demostrado que la educación y la tecnología pueden cambiar realidades cuando se sirven con vocación y dedicación. Que esta Navidad traiga paz, fortaleza y una fe renovada. Unidos avanzamos hacia un 2026 cargado de crecimiento comunitario y logros institucionales. Con aprecio profundo, Sede Central CTC"},
+                {name: "Las Guáranas", message: "Desde Santo Domingo enviamos nuestro reconocimiento al CTC Las Guáranas. Gracias por su esfuerzo constante, por su cercanía con la gente y por sostener la misión que compartimos. Que esta Navidad les brinde esperanza profunda y nuevas fuerzas para continuar impulsando a quienes más los necesitan. Vamos hacia un 2026 de más formación, más tecnología y más oportunidades reales. Con aprecio profundo, Sede Central CTC"},
+                {name: "Salcedo", message: "Desde la Sede Central extendemos un abrazo de gratitud al CTC Salcedo. Su dedicación refleja el espíritu de los CTC: solidaridad, compromiso y una fe que impulsa hacia lo posible. Que esta Navidad renueve su energía y les inspire a seguir sembrando conocimiento con pasión. Sigamos unidos hacia un 2026 de impacto, crecimiento y trabajo comunitario. Con aprecio profundo, Sede Central CTC"},
+                {name: "San Víctor", message: "Desde Santo Domingo enviamos un saludo lleno de estima al CTC San Víctor. Su trabajo transforma vidas, fortalece familias y abre caminos nuevos para toda su comunidad. Que esta Navidad llene sus corazones de serenidad y esperanza, y que el 2026 sea un año abundante en logros, aprendizajes y nuevas oportunidades. Con aprecio profundo, Sede Central CTC"},
+                {name: "Villa Riva", message: "Desde la Sede Central enviamos un abrazo especial al CTC Villa Riva. Su compromiso diario demuestra que cuando se trabaja con corazón, la transformación se multiplica y alcanza a quienes más lo necesitan. Que esta Navidad renueve su fe y les inspire a continuar guiando a su comunidad. Unidos, caminamos hacia un 2026 de proyectos fortalecidos, comunidad empoderada y crecimiento constante. Con aprecio profundo, Sede Central CTC"},
+                {name: "Baitoa", message: "Desde la Sede Central enviamos un abrazo lleno de luz al CTC Baitoa. Cada día ustedes demuestran que el servicio hecho con amor y dedicación puede transformar realidades, fortalecer familias y abrir caminos de esperanza. Que esta Navidad renueve su fe y multiplique en ustedes el deseo de seguir guiando a su comunidad hacia el aprendizaje y el crecimiento. Sigamos unidos hacia un 2026 lleno de oportunidades, avances y frutos para todos. Con aprecio profundo, Sede Central CTC"},
+                {name: "Cutupú", message: "Desde Santo Domingo enviamos un saludo lleno de gratitud al CTC Cutupú. Su constancia, su compromiso y su disposición a servir reflejan la esencia más noble de nuestra misión institucional. Que esta Navidad sea un tiempo de paz y renovación interior, y que el 2026 les encuentre fortalecidos, inspirados y guiando nuevas historias de éxito. Con aprecio profundo, Sede Central CTC"},
+                {name: "Guayabal (Santiago)", message: "Desde la Sede Central abrazamos con estima al CTC Guayabal Santiago. Su trabajo cercano, humano y lleno de vocación demuestra que cada acción, por pequeña que parezca, puede transformar una vida. Que esta Navidad ilumine su camino y renueve su esperanza. Caminemos juntos hacia un 2026 de logros comunitarios, desarrollo humano y aprendizaje continuo. Con aprecio profundo, Sede Central CTC"},
+                {name: "Hato del Yaque", message: "Desde Santo Domingo enviamos un abrazo profundo al CTC Hato del Yaque. Su dedicación constante, su espíritu de servicio y su compromiso con la juventud son pilares fundamentales para el crecimiento de su comunidad. Que esta Navidad les traiga claridad, paz y un entusiasmo renovado para seguir construyendo oportunidades. Unidos avanzamos hacia un 2026 de crecimiento, impacto y transformación social. Con aprecio profundo, Sede Central CTC"},
+                {name: "Imbert", message: "Desde la Sede Central extendemos un saludo especial al CTC Imbert. Gracias por mantenerse firmes, presentes y comprometidos con el proceso de desarrollo que impulsa cada día nuestra institución. Que esta Navidad fortalezca su fe y la esperanza que los impulsa a servir. Sigamos, unidos como una sola red, hacia un 2026 de logros, bienestar y nuevas oportunidades para todos. Con aprecio profundo, Sede Central CTC"},
+                {name: "Juncalito", message: "Desde Santo Domingo enviamos un abrazo lleno de gratitud al CTC Juncalito. Su esfuerzo incansable y su conexión con la comunidad han logrado abrir puertas y construir sueños para muchas familias. Que esta Navidad les regale paz interior, alegría y fuerza para continuar guiando con excelencia. Avancemos juntos hacia un 2026 de crecimiento humano, innovación y formación continua. Con aprecio profundo, Sede Central CTC"},
+                {name: "Licey al Medio", message: "Desde la Sede Central enviamos un mensaje de estimación profunda al CTC Licey al Medio. Su compromiso por enseñar, orientar y acompañar demuestra que la educación transforma desde el corazón. Que esta Navidad renueve su fe y esperanza, y que el 2026 sea un año de expansión, nuevos proyectos y fortalecimiento institucional. Con aprecio profundo, Sede Central CTC"},
+                {name: "Navarrete", message: "Desde Santo Domingo enviamos un saludo especial al CTC Navarrete. Su entrega, disciplina y cercanía con su comunidad inspiran el trabajo que hacemos en todo el país. Que esta Navidad les llene de alegría, paz y ánimo renovado para seguir iluminando vidas. Unidos caminamos hacia un 2026 de logros, aprendizaje y transformación positiva. Con aprecio profundo, Sede Central CTC"},
+                {name: "Rancho Arriba", message: "Desde la Sede Central enviamos un abrazo cálido al CTC Rancho Arriba. Su compromiso con su comunidad demuestra que cuando la vocación y el amor por servir se unen, la transformación se vuelve imparable. Que esta Navidad renueve su espíritu y fortalezca la esperanza que los sostiene. Avancemos juntos hacia un 2026 de crecimiento humano y oportunidades para todos. Con aprecio profundo, Sede Central CTC"},
+                {name: "Sabana Iglesia", message: "Desde Santo Domingo enviamos un mensaje lleno de gratitud al CTC Sabana Iglesia. Su espíritu comunitario, su cercanía y su dedicación diaria reflejan el corazón del modelo CTC. Que esta Navidad sea un tiempo de luz y renovación. Unámonos en esperanza mientras caminamos hacia un 2026 de mayor impacto, logros y bienestar para su comunidad. Con aprecio profundo, Sede Central CTC"},
+                {name: "Tireo", message: "Desde la Sede Central enviamos un abrazo lleno de aprecio al CTC Tireo. Su labor, cargada de esfuerzo y entrega, ha construido espacios de aprendizaje que iluminan el futuro de cientos de personas. Que esta Navidad fortalezca su fe y renueve sus fuerzas para continuar guiando con excelencia. Unidos avanzamos hacia un 2026 de proyectos fortalecidos, crecimiento y nuevas oportunidades. Con aprecio profundo, Sede Central CTC"}
+            ],
+            zonaMetropolitana: [
+                {name: "Boca Chica", message: "Desde la Sede Central del CTC en Santo Domingo enviamos un abrazo lleno de gratitud al CTC Boca Chica. Su fortaleza, su entrega y su capacidad de acompañar a su comunidad con dignidad y alegría inspiran profundamente a toda nuestra institución. En esta Navidad, que la esperanza ilumine cada uno de sus pasos y que la fe renueve la energía que necesitan para seguir sembrando oportunidades. Juntos avanzamos hacia un 2026 de grandes proyectos, crecimiento sostenido y nuevas historias de transformación. Con aprecio profundo, Sede Central CTC"},
+                {name: "Guerra", message: "Desde Santo Domingo enviamos un mensaje lleno de luz y reconocimiento al CTC Guerra. Gracias por sostener con compromiso la misión de abrir puertas al conocimiento, de acompañar a quienes buscan aprender y de transformar desde lo cotidiano. Que esta Navidad les llene de paz y que la esperanza guíe cada decisión y cada esfuerzo en el camino hacia un 2026 lleno de logros, crecimiento y propósito compartido. Con aprecio profundo, Sede Central CTC"},
+                {name: "La Barquita", message: "Desde la Sede Central abrazamos con estima al CTC La Barquita. Su dedicación, disciplina y espíritu humano representan la esencia más pura de nuestra red nacional: servir con cercanía, educar con amor y transformar con tecnología y valores. Que esta Navidad fortalezca su fe, renueve sus fuerzas y les recuerde que no están solos. Somos una sola familia CTC, caminando unidos hacia un 2026 de impacto real y oportunidades para todos. Con aprecio profundo, Sede Central CTC"},
+                {name: "La Victoria", message: "Desde Santo Domingo enviamos un abrazo cálido al CTC La Victoria. Su compromiso con la educación, la tecnología y el desarrollo humano en una comunidad tan valiosa nos llena de orgullo y esperanza. Que esta Navidad despierte en ustedes una alegría renovada y una fuerza interior que les impulse a seguir guiando vidas. Unidos, seguimos construyendo un 2026 de mayores avances, crecimiento y transformación social. Con aprecio profundo, Sede Central CTC"},
+                {name: "Los Alcarrizos", message: "Desde la Sede Central extendemos nuestro agradecimiento al CTC Los Alcarrizos, un equipo que demuestra cada día que la vocación y la constancia pueden cambiar realidades. Que esta Navidad sea un tiempo de renovación espiritual, de paz profunda y de esperanza viva en el corazón de cada miembro de su equipo. Sigamos avanzando juntos hacia un 2026 lleno de metas alcanzadas y logros que dignifiquen a nuestra gente. Con aprecio profundo, Sede Central CTC"},
+                {name: "Los Botados", message: "Desde Santo Domingo enviamos un mensaje especial al CTC Los Botados. Gracias por mantenerse firmes, presentes y comprometidos, incluso en los retos, llevando la misión de los CTC a cada persona que toca sus puertas. Que esta Navidad renueve su fe y les dé claridad y entusiasmo para seguir avanzando. Unidos como una sola red nacional, trabajamos por un 2026 de crecimiento comunitario y nuevas oportunidades. Con aprecio profundo, Sede Central CTC"},
+                {name: "Los Guarícanos", message: "Desde la Sede Central enviamos un abrazo lleno de esperanza al CTC Los Guarícanos. Ustedes son un ejemplo vivo de resiliencia, vocación y servicio comunitario. Que esta Navidad llene sus corazones de paz, y que 2026 les encuentre fortalecidos, motivados y guiando a su comunidad hacia un futuro lleno de posibilidades. Con aprecio profundo, Sede Central CTC"},
+                {name: "Luperón–Capotillo", message: "Desde la Sede Central abrazamos al CTC Luperón–Capotillo con gratitud sincera. Su labor diaria, llena de valentía y compromiso, es una demostración poderosa de lo que la educación y la tecnología pueden lograr cuando se unen al corazón humano. En esta Navidad, que la fe les sostenga y que la esperanza les impulse. Sigamos construyendo un 2026 de impacto social, oportunidades reales y crecimiento comunitario. Con aprecio profundo, Sede Central CTC"},
+                {name: "Pedro Brand", message: "Desde Santo Domingo extendemos un saludo lleno de aprecio al CTC Pedro Brand. Su dedicación ha sido fundamental para que más personas encuentren caminos para aprender, crecer y transformar sus vidas. Que esta Navidad renueve su espíritu de servicio y fortalezca la esperanza que los impulsa. Juntos caminamos hacia un 2026 lleno de proyectos, oportunidades y nuevas metas logradas. Con aprecio profundo, Sede Central CTC"},
+                {name: "Peralvillo", message: "Desde la Sede Central enviamos un abrazo lleno de gratitud al CTC Peralvillo. Su esfuerzo continuo y su compromiso con las comunidades rurales nos recuerdan que la transformación comienza desde lo cercano, lo humano y lo constante. Que esta Navidad les regale paz profunda, luz interior y la certeza de que su trabajo vale y transforma. Unidos vamos hacia un 2026 de logros institucionales y desarrollo comunitario. Con aprecio profundo, Sede Central CTC"},
+                {name: "Villa Altagracia", message: "Desde Santo Domingo enviamos nuestro reconocimiento al CTC Villa Altagracia. Gracias por convertir cada día en una oportunidad para enseñar, servir y acompañar con calidad y calidez. En esta Navidad, que la alegría sea abundante, que la fe sea inquebrantable y que la esperanza guíe el camino hacia un 2026 de crecimiento, nuevos proyectos y transformación social. Con aprecio profundo, Sede Central CTC"},
+                {name: "Villa Mella", message: "Desde la Sede Central enviamos un abrazo lleno de luz al CTC Villa Mella. Su dedicación, creatividad y esfuerzo diario se reflejan en cada persona que encuentra en ustedes un espacio para aprender y superarse. Que esta Navidad fortalezca su fe, renueve su esperanza y les prepare para un 2026 cargado de nuevas oportunidades y avances para su comunidad. Con aprecio profundo, Sede Central CTC"},
+                {name: "Yamasá", message: "Desde Santo Domingo enviamos un saludo especial al CTC Yamasá. Su labor en una comunidad tan valiosa demuestra que el compromiso, la empatía y la educación son herramientas poderosas para romper barreras y abrir caminos. Que esta Navidad sea tiempo de paz, renovación y esperanza viva. Unidos seguimos avanzando hacia un 2026 de resultados, crecimiento y transformación positiva. Con aprecio profundo, Sede Central CTC"}
+            ],
+            zonaEste: [
+                {name: "Bayaguana", message: "Desde la Sede Central del CTC en Santo Domingo enviamos un abrazo lleno de luz, gratitud y esperanza al CTC Bayaguana. Su entrega diaria fortalece nuestra misión de formar, acompañar y transformar a través de la tecnología, la educación y los valores que sostienen a nuestra nación. Que esta Navidad renueve su fe, avive su esperanza y reafirme su compromiso con el servicio público. Sigamos planificando juntos un 2026 de crecimiento, oportunidades y transformación para nuestras comunidades. Con aprecio profundo, Sede Central CTC"},
+                {name: "El Cedro", message: "Desde la Sede Central extendemos nuestro abrazo especial al CTC El Cedro, cuya labor incansable refleja el espíritu de solidaridad y servicio que define nuestra institución. En esta Navidad, que la luz de la esperanza guíe su camino y les dé nuevas fuerzas para continuar construyendo oportunidades. Sigamos unidos como una sola red nacional hacia un 2026 lleno de logros y nuevas metas cumplidas. Con aprecio profundo, Sede Central CTC"},
+                {name: "El Seibo", message: "Desde la Sede Central enviamos un mensaje lleno de gratitud al CTC El Seibo. Día tras día su compromiso demuestra que la transformación comienza desde el corazón de nuestras comunidades. Que esta Navidad fortalezca la fe que sostiene su servicio y renueve su esperanza para continuar impactando vidas. Seguimos juntos, como una sola familia CTC, avanzando hacia un 2026 de proyectos sólidos y crecimiento comunitario. Con aprecio profundo, Sede Central CTC"},
+                {name: "El Valle", message: "Desde la Sede Central abrazamos con estima al CTC El Valle, un ejemplo de compromiso y entrega. A través de su trabajo, la misión de CTC se hace realidad: abrir caminos hacia la educación, la tecnología y el desarrollo humano. En esta Navidad, que la paz llene sus corazones y la esperanza les impulse a seguir construyendo un mejor mañana. Vamos juntos hacia un 2026 de avances y nuevas oportunidades para todos. Con aprecio profundo, Sede Central CTC"},
+                {name: "Gonzalo", message: "Desde Santo Domingo enviamos un cálido saludo al CTC Gonzalo, agradeciendo su dedicación y espíritu de servicio. Ustedes representan la esencia de lo que somos: una red que acompaña, capacita y transforma. Que esta Navidad renueve su ánimo y multiplique la fortaleza que necesitan para continuar guiando a su comunidad. Unidos seguiremos avanzando hacia un 2026 de metas cumplidas y crecimiento institucional. Con aprecio profundo, Sede Central CTC"},
+                {name: "Guayabo Dulce", message: "Desde la Sede Central del CTC enviamos un abrazo cargado de gratitud y luz al CTC Guayabo Dulce. Cada día, con su esfuerzo silencioso y constante, siembran oportunidades donde antes había limitaciones, y esperanza donde antes había incertidumbre. En esta Navidad, deseamos que la fe renueve sus fuerzas y que la esperanza ilumine cada paso que darán hacia un 2026 de grandes resultados y crecimiento comunitario. Ustedes son testimonio vivo de que la transformación es posible cuando se trabaja con amor y propósito. Con aprecio profundo, Sede Central CTC"},
+                {name: "Guaymate", message: "Desde la Sede Central enviamos un saludo lleno de cariño al CTC Guaymate, un centro que ha demostrado que la educación, la tecnología y la solidaridad pueden cambiar vidas de manera real y profunda. Que esta Navidad encienda en ustedes una nueva llama de entusiasmo, valentía y esperanza para continuar acompañando a cada joven, adulto y familia que deposita su confianza en ustedes. Sigamos unidos rumbo a un 2026 de metas alcanzadas y nuevas oportunidades para todos. Con aprecio profundo, Sede Central CTC"},
+                {name: "Hato Mayor del Rey", message: "Desde Santo Domingo abrazamos con especial estima al CTC Hato Mayor del Rey. Gracias por sostener con entrega la misión que nos une: transformar comunidades, abrir caminos de aprendizaje y fortalecer la fe en un futuro posible. En esta Navidad, que la paz llene sus corazones y que la esperanza les impulse a seguir sembrando conocimiento con pasión. Caminemos juntos hacia un 2026 lleno de avances, logros y crecimiento para su comunidad. Con aprecio profundo, Sede Central CTC"},
+                {name: "Los Llanos", message: "Desde la Sede Central enviamos un mensaje lleno de luz al CTC Los Llanos. Su labor refleja el espíritu de compromiso, trabajo digno y solidaridad que mueve a los CTC en todo el país. En esta Navidad, pedimos que la esperanza se multiplique en sus corazones y que la fe les sostenga en cada nuevo reto. Como una sola red, avanzamos hacia un 2026 de oportunidades concretas y transformación social. Con aprecio profundo, Sede Central CTC"},
+                {name: "Mata Palacio", message: "Desde Santo Domingo enviamos un abrazo lleno de gratitud al CTC Mata Palacio. Ustedes demuestran cada día que cuando una comunidad se une al aprendizaje, la innovación y el servicio, el futuro florece. Que esta Navidad les traiga renovación espiritual, alegría y la certeza de que su trabajo impacta vidas de manera profunda. Unidos, seguimos avanzando hacia un 2026 de crecimiento sostenido y nuevas metas cumplidas. Con aprecio profundo, Sede Central CTC"},
+                {name: "Miches", message: "Desde la Sede Central reconocemos y valoramos la hermosa labor del CTC Miches, un equipo que ha sabido acompañar con amor, disciplina y compromiso a una comunidad llena de potencial. Que esta Navidad les devuelva fuerzas, renueve su fe y les inspire a continuar guiando a quienes buscan una oportunidad para crecer. Sigamos juntos hacia un 2026 lleno de progreso, aprendizaje y desarrollo humano. Con aprecio profundo, Sede Central CTC"},
+                {name: "Pedro Sánchez", message: "Desde Santo Domingo enviamos un saludo cálido y esperanzador al CTC Pedro Sánchez. Su esfuerzo sostenido demuestra que los pequeños actos de servicio diario construyen grandes transformaciones. Que esta Navidad traiga paz a sus corazones y claridad a sus propósitos. Unidos como una sola red nacional, avanzamos hacia un 2026 cargado de logros, impacto positivo y crecimiento comunitario. Con aprecio profundo, Sede Central CTC"},
+                {name: "Ramón Santana", message: "Desde la Sede Central enviamos un abrazo lleno de gratitud al CTC Ramón Santana. Su dedicación a la educación, la tecnología y el desarrollo humano inspira y honra la misión que compartimos. Que esta Navidad fortalezca su fe y renueve su espíritu de servicio. Que el 2026 sea un año de grandes avances, nuevas oportunidades y conquistas institucionales. Con aprecio profundo, Sede Central CTC"},
+                {name: "Sabana de la Mar", message: "Desde Santo Domingo saludamos al CTC Sabana de la Mar, un centro que ha sabido sostener, con valentía y vocación, la bandera de la educación comunitaria y la innovación social. En esta Navidad deseamos que la esperanza les abrace y que la fe les impulse a seguir guiando a quienes buscan transformar su futuro. Juntos caminamos hacia un 2026 de crecimiento y logros compartidos. Con aprecio profundo, Sede Central CTC"},
+                {name: "Sabana Grande de Boyá", message: "Desde la Sede Central enviamos un mensaje lleno de afecto al CTC Sabana Grande de Boyá. Ustedes han demostrado que el servicio honesto, constante y cercano puede cambiar la vida de muchas personas. Que esta Navidad renueve su energía, su entusiasmo y su confianza en los procesos que construimos juntos. Vamos hacia un 2026 con pasos firmes y propósitos cumplidos. Con aprecio profundo, Sede Central CTC"},
+                {name: "San Rafael del Yuma", message: "Desde Santo Domingo saludamos con admiración al CTC San Rafael del Yuma. Su compromiso es un faro de esperanza para todos los que buscan una oportunidad para crecer. Que esta Navidad les traiga paz, fuerza y claridad para continuar guiando a su comunidad. Unidos como una gran familia CTC, avanzamos hacia un 2026 lleno de logros y transformación positiva. Con aprecio profundo, Sede Central CTC"},
+                {name: "Yerba Buena", message: "Desde la Sede Central enviamos un abrazo lleno de luz al CTC Yerba Buena. Gracias por su servicio, su entrega y su constante disposición a brindar oportunidades donde más se necesitan. Que esta Navidad renueve su esperanza y su fe en la misión que compartimos. Sigamos impulsando juntos un 2026 de crecimiento, fortalecimiento institucional y desarrollo desde la comunidad. Con aprecio profundo, Sede Central CTC"}
+            ],
+            compumetros: [
+                {name: "Amin Abel", message: "Desde la Sede Central del CTC enviamos un abrazo lleno de luz, gratitud y esperanza al CTC Amin Abel. Su entrega diaria refleja la esencia más noble de nuestra institución: servir con amor, acompañar con responsabilidad y transformar vidas a través del conocimiento. En esta Navidad, que la fe renueve su espíritu, que la esperanza fortalezca su ánimo y que la planificación estratégica siga guiando sus esfuerzos hacia un 2026 lleno de metas cumplidas y avances reales para su comunidad. Somos una sola red nacional unida por un propósito común, comprometida con el desarrollo de nuestra gente. Sigamos trabajando con pasión. Sigamos creciendo. Sigamos iluminando vidas. Con aprecio profundo, Sede Central CTC"},
+                {name: "Centro Los Héroes", message: "Desde la Sede Central del CTC enviamos un abrazo lleno de gratitud y esperanza al CTC Centro Los Héroes. La dedicación con la que trabajan cada día demuestra que el servicio público es un acto de amor por la gente y un compromiso con el futuro de la República Dominicana. En esta Navidad, que la fe ilumine su espíritu, que la esperanza fortalezca su camino y que la planificación estratégica continúe guiando sus acciones para lograr metas compartidas y transformar vidas. Somos una sola red, una sola familia institucional al servicio del país. Sigamos avanzando con unidad y propósito. Con sincero aprecio, Sede Central CTC"},
+                {name: "Eduardo Brito", message: "Desde la Sede Central del CTC enviamos un mensaje de profundo agradecimiento al CTC Eduardo Brito. Su entrega diaria demuestra que la transformación social comienza en los pequeños actos de servicio, en la orientación oportuna y en la voluntad de abrir puertas para quienes buscan aprender y crecer. En esta Navidad, que la fe renueve su fuerza interior, que la esperanza los anime a seguir y que la planificación estratégica continúe guiando sus logros durante el 2026. Somos una sola red nacional comprometida con la educación, la tecnología y el desarrollo de nuestra gente. Que sigan siendo luz y guía para su comunidad. Con admiración, Sede Central CTC"},
+                {name: "Juan Pablo Duarte", message: "Desde la Sede Central del CTC enviamos un abrazo cálido al CTC Juan Pablo Duarte. El trabajo que realizan honra el legado del Padre de la Patria: educar, inspirar y fortalecer a cada ciudadano que busca un mejor futuro. Que esta Navidad renueve su fe, avive su esperanza e impulse sus capacidades para planificar, mejorar y avanzar hacia nuevas metas institucionales. Somos una sola red de transformación y servicio. Sigamos construyendo un país más fuerte y solidario. Con estima, Sede Central CTC"},
+                {name: "María Montez", message: "Desde la Sede Central del CTC enviamos un mensaje de afecto y reconocimiento al CTC María Montez. Su entrega diaria representa el valor, la disciplina y el amor por la comunidad que caracterizan a nuestra institución. En esta Navidad deseamos que la fe ilumine su camino, que la esperanza fortalezca su espíritu y que la planificación estratégica siga guiando sus acciones para alcanzar nuevas metas. Somos una sola red comprometida con el desarrollo y la libertad de cada ciudadano. Sigamos haciendo historia juntos. Con aprecio, Sede Central CTC"},
+                {name: "Mauricio Báez", message: "Desde la Sede Central enviamos un mensaje lleno de luz y agradecimiento al CTC Mauricio Báez. Cada día demuestran que servir es un privilegio y que transformar vidas es una misión que requiere entrega, paciencia y corazón. Que esta Navidad los llene de fe renovada, esperanza profunda y motivación para continuar planificando con visión hacia un 2026 lleno de crecimiento y oportunidades. Somos una sola red trabajando de manera unida por la República Dominicana. Que sigan siendo puente, guía y luz para su comunidad. Con respeto y admiración, Sede Central CTC"},
+                {name: "Prof. Juan Bosch", message: "Desde la Sede Central del CTC enviamos un abrazo profundo al CTC Profesor Juan Bosch. El ejemplo de integridad, educación y servicio que representan honra el legado del maestro que lleva su nombre. Que esta Navidad traiga renovación espiritual, claridad para la planificación y fuerza para alcanzar nuevas metas institucionales. Somos una sola red nacional que trabaja por el desarrollo humano y tecnológico de nuestra gente. Sigamos sirviendo con amor y compromiso. Con afecto, Sede Central CTC"},
+                {name: "T3", message: "Desde la Sede Central del CTC enviamos un mensaje especial al CTC T3. Su labor cotidiana refleja la magnitud de nuestro propósito institucional: acompañar, educar y abrir horizontes para quienes buscan mejorar su vida. En esta Navidad deseamos que la fe fortalezca su espíritu, que la esperanza renueve su propósito y que la planificación estratégica continúe guiando sus logros durante el próximo año. Somos una sola red, una sola familia que transforma la nación desde cada aula y cada comunidad. Sigamos avanzando con determinación y esperanza. Con sincero aprecio, Sede Central CTC"}
+            ]
+        };
         
-        createSnow();
-        
-        // Manejar envío del formulario
-        document.getElementById('wishForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            generateLetter();
-        });
-        
-        function generateLetter() {
-            const name = document.getElementById('name').value.trim();
-            const ctc = document.getElementById('ctc').value.trim();
-            const wish = document.getElementById('wish').value.trim();
+        function createOrnament(name, message, isRed) {
+            const ornament = document.createElement('div');
+            ornament.className = 'ornament';
+            ornament.onclick = () => showMessage(name, message);
             
-            // Obtener fecha actual
-            const now = new Date();
-            const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
-                          'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-            const dateStr = `Polo Norte, ${now.getDate()} de ${months[now.getMonth()]} de ${now.getFullYear()}`;
-            
-            document.getElementById('letterDate').textContent = dateStr;
-            
-            // Generar contenido personalizado
-            const letterContent = `
-                <p>Querido/a <span class="highlight">${name}</span>,</p>
-                
-                <p>¡Ho, ho, ho! Saludos desde mi taller en el <span class="highlight">Polo Norte</span>, donde junto a mis duendes no solo preparamos regalos, sino que también llevamos <span class="highlight">tecnología e innovación</span> a cada rincón del mundo. Tu carta ha llegado a través de nuestros sistemas digitales más avanzados, y he leído con gran atención tu mensaje.</p>
-                
-                <p>Me llena de alegría saber que formas parte del equipo del <span class="highlight">${ctc}</span>, uno de los lugares más especiales que conozco en toda República Dominicana. Los <span class="highlight">Centros Tecnológicos Comunitarios</span> son verdaderos faros de esperanza y conocimiento, donde día a día se transforman vidas a través de la educación y la tecnología. ¡Qué noble labor la que realizas!</p>
-                
-                <p>Has compartido conmigo tu deseo para este 2026: <span class="highlight">"${wish}"</span></p>
-                
-                <p>Este deseo ha tocado mi corazón navideño profundamente. Desde aquí, en mi taller equipado con la última tecnología (sí, hasta en el Polo Norte innovamos), quiero decirte que la magia más poderosa no viene de mi saco de regalos, sino del <span class="highlight">corazón y la determinación</span> de personas como tú que trabajan cada día por un mundo mejor.</p>
-                
-                <p>Para este 2026, te envío mi bendición navideña más especial. Que cada día en el <span class="highlight">${ctc}</span> esté lleno de nuevas oportunidades, que tu trabajo siga impactando positivamente a tu comunidad, y que tu deseo se vaya cumpliendo paso a paso, con la misma constancia con la que mis renos vuelan cada Nochebuena.</p>
-                
-                <p>Recuerda que el espíritu navideño no vive solo en diciembre, sino en cada acto de bondad, en cada mano extendida, y en cada sueño que te atreves a perseguir. Tú, <span class="highlight">${name}</span>, eres parte de ese espíritu que hace al mundo un lugar mejor.</p>
-                
-                <p>Sigue brillando en tu labor en los CTC, sigue creyendo en la magia del conocimiento compartido, y mantén siempre viva la llama de la esperanza en tu corazón.</p>
-                
-                <p style="text-align: center; font-size: 1.3em; color: #c41e3a; margin-top: 30px;">
-                    ✨ ¡Felices Fiestas y un Próspero 2026! ✨
-                </p>
+            ornament.innerHTML = `
+                <div class="ornament-top"></div>
+                <div class="ornament-ball">
+                    <div class="ornament-icons">
+                        <span style="color: ${isRed ? '#ff3333' : '#3366ff'}">💻</span>
+                        <span style="color: ${isRed ? '#3366ff' : '#ff3333'}">📊</span>
+                    </div>
+                </div>
+                <div class="ornament-name">${name}</div>
             `;
             
-            document.getElementById('letterContent').innerHTML = letterContent;
+            return ornament;
+        }
+        
+        function loadCenters() {
+            let isRed = true;
             
-            // Ocultar formulario y mostrar carta
-            document.getElementById('formSection').style.display = 'none';
-            document.getElementById('letterSection').style.display = 'block';
+            Object.keys(centers).forEach(zone => {
+                const container = document.getElementById(zone);
+                centers[zone].forEach(center => {
+                    container.appendChild(createOrnament(center.name, center.message, isRed));
+                    isRed = !isRed;
+                });
+            });
+        }
+        
+        function showMessage(name, message) {
+            const popup = document.getElementById('messagePopup');
+            const overlay = document.getElementById('overlay');
             
-            // Scroll suave hacia la carta
-            document.getElementById('letterSection').scrollIntoView({ behavior: 'smooth' });
+            popup.innerHTML = `
+                <h2>🎄 CTC ${name} 🎄</h2>
+                <p>${message}</p>
+                <button class="close-btn" onclick="closeMessage()">Cerrar</button>
+            `;
+            
+            popup.style.display = 'block';
+            overlay.style.display = 'block';
         }
         
-        function downloadLetter() {
-            window.print();
+        function closeMessage() {
+            document.getElementById('messagePopup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
         }
         
-        function newLetter() {
-            document.getElementById('formSection').style.display = 'block';
-            document.getElementById('letterSection').style.display = 'none';
-            document.getElementById('wishForm').reset();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        function santaGreeting() {
+            showMessage('Santa CTC', '¡Ho Ho Ho! 🎅 ¡Feliz Navidad desde la Sede Central CTC Polo Norte! Que esta temporada navideña llene sus corazones de alegría, paz y esperanza. Unidos como una gran familia CTC, seguimos construyendo un futuro mejor para todas nuestras comunidades. ¡Felices Fiestas! 🎄⭐');
         }
         
-        // Estilos de impresión
-        const style = document.createElement('style');
-        style.textContent = `
-            @media print {
-                body * {
-                    visibility: hidden;
-                }
-                .letter-section, .letter-section * {
-                    visibility: visible;
-                }
-                .letter-section {
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    width: 100%;
-                }
-                .buttons-container {
-                    display: none !important;
-                }
-                .snowflake, .sleigh-container, .decoration {
-                    display: none !important;
-                }
+        function createSnowflakes() {
+            const container = document.getElementById('snowflakes');
+            for (let i = 0; i < 150; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.innerHTML = '❄';
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 5 + 3) + 's';
+                snowflake.style.animationDelay = Math.random() * 8 + 's';
+                snowflake.style.fontSize = (Math.random() * 1.5 + 0.5) + 'em';
+                snowflake.style.opacity = Math.random() * 0.7 + 0.3;
+                container.appendChild(snowflake);
             }
-        `;
-        document.head.appendChild(style);
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCenters();
+            createSnowflakes();
+            
+            const music = document.getElementById('bgMusic');
+            document.body.addEventListener('click', () => {
+                music.play().catch(e => console.log('Audio play failed:', e));
+            }, { once: true });
+        });
     </script>
 </body>
 </html>
